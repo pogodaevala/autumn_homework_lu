@@ -19,10 +19,7 @@ Graph::Graph(int V) {
   parents_ = parents;
 }
 
-void Graph::AddEdge(int u, int v) {
-  data_[u].push_back(v);
-  data_[v].push_back(u);
-}
+void Graph::AddEdge(int u, int v) { data_[u].push_back(v); }
 
 bool Graph::IsThereAWay(std::pair<int, int> pair) {
   if (pair.first == pair.second) return true;
@@ -52,7 +49,11 @@ void Graph::InnerDFS(int u, std::vector<int>& order) {
       throw CycleExistError();
     }
     if (colors_[v] == Color::white) {
-      InnerDFS(v, order);
+      try {
+        InnerDFS(v, order);
+      } catch (const CycleExistError& e) {
+        throw;
+      }
     }
   }
   colors_[u] = Color::black;
@@ -67,10 +68,19 @@ void Graph::CleanColorsParents() {  // потому что каждый раз �
   parents_ = parents;
 }
 
-std::vector<int> Graph::TopologySort(int start) {
+std::vector<int> Graph::TopologySort() {
   std::vector<int> order;
-  InnerDFS(start, order);
-  CleanColorsParents();
-  std::reverse(order.begin(), order.end());
-  return order;
+  try {
+    for (int i = 0; i < data_.size(); ++i) {
+      if (colors_[i] == Color::white) {
+        InnerDFS(i, order);
+      }
+    }
+    CleanColorsParents();
+    std::reverse(order.begin(), order.end());
+    return order;
+  } catch (const CycleExistError& e) {
+    CleanColorsParents();
+    throw;
+  }
 }

@@ -9,13 +9,12 @@ class Graph {
   Graph(int V);
   //~Graph();
   void AddEdge(int u, int v);
-  std::vector<int> TopologySort(int start);
-  std::vector<int> TopologySort() { return TopologySort(0); }
+  std::vector<int> TopologySort();
   bool IsThereAWay(std::pair<int, int> pair);
+  class CycleExistError : public std::exception {};
 
  private:
   enum class Color { white = 0, grey = 1, black = 2 };
-  class CycleExistError : public std::exception {};
   std::vector<std::vector<int>> data_;
   std::vector<Color> colors_;
   std::vector<int> parents_;
