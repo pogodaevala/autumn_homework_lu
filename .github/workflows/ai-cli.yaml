@@ -1,9 +1,7 @@
 name: AI CLI Analysis
 
 on:
-  pull_request:
-    branches: [ main, master ]
-    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
 
 jobs:
   ai-cli:

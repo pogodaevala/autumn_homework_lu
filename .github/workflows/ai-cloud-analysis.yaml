@@ -1,9 +1,7 @@
 name: AI Cloud Analysis
 
 on:
-  pull_request:
-    branches: [ main, master ]
-    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
 
 jobs:
   cloud-analysis:
@@ -336,7 +334,7 @@ jobs:
               print('No files changed')
           "
 
-            - name: Final Summary
+      - name: Final Summary
         if: always()
         uses: actions/github-script@v7
         with:
@@ -346,7 +344,7 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '## 🤖 AI Analysis Complete!\\n\\n**Analysis performed using cloud services:**\\n\\n- 🤖 Hugging Face Inference API\\n- ☁️ Replicate API\\n- 🏠 Local AI services (if available)\\n- 📊 Enhanced pattern-based analysis\\n\\n**To enable more AI services:**\\n1. Add `HUGGINGFACE_API_KEY` secret for Hugging Face\\n2. Add `REPLICATE_API_KEY` secret for Replicate\\n3. Run local AI services (Ollama, etc.)\\n\\n---\\n*AI-powered code review*'
+                body: '## 🤖 AI Analysis Complete!\n\n**Analysis performed using cloud services:**\n\n- 🤖 Hugging Face Inference API\n- ☁️ Replicate API\n- 🏠 Local AI services (if available)\n- 📊 Enhanced pattern-based analysis\n\n**To enable more AI services:**\n1. Add `HUGGINGFACE_API_KEY` secret for Hugging Face\n2. Add `REPLICATE_API_KEY` secret for Replicate\n3. Run local AI services (Ollama, etc.)\n\n---\n*AI-powered code review*'
               });
               console.log('Summary comment posted successfully');
             } catch (error) {
@@ -357,7 +355,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   pull_number: context.issue.number,
-                  body: '## 🤖 AI Analysis Complete!\\n\\n**Analysis performed using cloud services:**\\n\\n- 🤖 Hugging Face Inference API\\n- ☁️ Replicate API\\n- 🏠 Local AI services (if available)\\n- 📊 Enhanced pattern-based analysis\\n\\n---\\n*AI-powered code review*'
+                  body: '## 🤖 AI Analysis Complete!\n\n**Analysis performed using cloud services:**\n\n- 🤖 Hugging Face Inference API\n- ☁️ Replicate API\n- 🏠 Local AI services (if available)\n- 📊 Enhanced pattern-based analysis\n\n---\n*AI-powered code review*'
                 });
                 console.log('PR comment posted successfully');
               } catch (prError) {

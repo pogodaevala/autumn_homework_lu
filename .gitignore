@@ -55,3 +55,7 @@ _deps
 .cache/*
 .vscode/*
 build/*
+
+# Allow expected outputs for tests to be committed
+!**/tests/*.out
+!**/tests/**/*.out
